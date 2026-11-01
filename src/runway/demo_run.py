@@ -97,7 +97,7 @@ def run_demo(feed: Feed, *, receipt_path: str, tamper_path: str,
     def append(kind: str, payload: dict) -> None:
         entry = chain.append(kind, payload, ts=TS)
         feed.emit("receipt.appended", {
-            "seq": entry.seq, "op": payload.get("op", kind),
+            "chain_seq": entry.seq, "op": payload.get("op", kind),
             "hash": entry.hash[:12], "prev": entry.prev_hash[:12],
         })
 
