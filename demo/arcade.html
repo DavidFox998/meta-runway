@@ -207,7 +207,7 @@ function stamp(text, pass) {
 }
 
 function onEvent(ev) {
-  const p = ev.payload || {};
+  const p = ev; // film-build fix: feed events are flat, no payload wrapper (branch bug, see report)
   switch (ev.kind) {
     case 'mandate.loaded':
       $('stage').textContent = stages[p.beat] || ('STAGE ' + p.beat);
@@ -259,7 +259,7 @@ function onEvent(ev) {
       break;
     }
     case 'receipt.appended': {
-      const row = '<div><span class="op">#' + p.seq + ' ' + p.op +
+      const row = '<div><span class="op">#' + (p.chain_seq != null ? p.chain_seq : p.seq) + ' ' + p.op +
         '</span> <span class="hash">' + p.hash + ' &larr; ' + p.prev + '</span></div>';
       $('scores').innerHTML = row + $('scores').innerHTML;
       if (p.op === 'LEDGER_CAPTURE') { score += 3499; $('q-score').textContent = score; }
