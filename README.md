@@ -63,7 +63,7 @@ suite and recorded live runs are the prototype conformance evidence.
 
 ## The reference implementation
 
-The tenant is **Muse Spark** (in the demo we call her SOPH-E). The
+The tenant is **Muse Spark**. The
 environment is a commerce environment — the Runway: the scaffold of
 checkpoints a purchase must cross before money moves. A client hands the
 tenant a *mandate*: an exact item, a hard budget cap, a deadline. From
@@ -89,6 +89,14 @@ The environment's five gates, in protocol terms:
    chain. Anyone can replay the run and re-check every measurement the
    money moved on.
 
+Before the run, **Gate 0** judges the claimant rather than the claim:
+the seller's own record — its price drift, its attribute mismatches,
+the length of its history — is measured first, and a drifting,
+mislabelling, or unproven seller is refused by name
+(`seller_price_drift`, `seller_attribute_mismatch`,
+`insufficient_history`) before its first offer is ever measured.
+`scripts/gate0_evaluate.py` reproduces the separation.
+
 While the tenant works, a **brain layer** keeps a heartbeat over the
 agent itself: cognitive probes ride the heartbeat, and the agent's
 *liveliness* — response, coherence, continuity, recovery, calibration —
@@ -111,10 +119,14 @@ is not part of this entry and none of its code is in this repository.
 
 - `DESIGN.md` — architecture, the GAT axes, the sealed-core boundary
 - `docs/BRAIN-WRAPPER-SPEC.md` — heartbeat + liveliness measurement spec
+- `docs/JUDGE-SCRIPT.md` — the two-minute guided demonstration, with
+  the expected output of every step
 - `schemas/` — the claim and receipt JSON Schemas (protocol messages)
 - `src/runway/` — the environment: `tenant.py` (the proposer),
   `run.py` (the environment / run loop), `gates.py`, `delivery.py`,
-  `ledger.py` (assets under seal), `receipts.py`, `brain.py`, `probes.py`
+  `sellers.py` (Gate 0), `ledger.py` (assets under seal),
+  `receipts.py`, `brain.py`, `probes.py`
+- `scripts/` — the live run and the Gate 0 evaluation
 - `tests/` — the gates and the chain, tested refusal-first
 - `artifacts/` — recorded live runs; their receipts replay bit-for-bit
 
@@ -122,9 +134,13 @@ is not part of this entry and none of its code is in this repository.
 
 The environment stands complete through the receipt gate: mandate,
 offer, payment, delivery (SAM 3.1, mask-measured), ledger, receipt chain
-with replay, brain/liveliness, and the Spark tenant — 77 tests passing,
-live runs recorded and replayed. This branch carries the Environment
-Protocol v0 reframe: protocol vocabulary in code and docs, the Mandate
-structurally frozen; no gate logic changed.
+with replay, brain/liveliness, and the Spark tenant — **89 tests
+passing**, live runs recorded and replayed bit-for-bit. Gate 0, seller
+verification, is part of the implementation on this main line. The
+protocol vocabulary is in code and docs throughout, and the Mandate is
+structurally frozen — the tenant cannot edit the terms it is measured
+against. The interactive demo — the cabinet, its live feed, and a
+one-click verification that replays every recorded chain in the
+browser — lives on the `demo/arcade-cabinet` branch.
 
 *Motto: measured, not minted — proven, not asserted.*
