@@ -25,6 +25,7 @@ RECEIPT_PATH = os.path.join(DEMO_DIR, "receipt.jsonl")
 TAMPER_PATH = os.path.join(DEMO_DIR, "tamper_state.json")
 INDEX_PATH = os.path.join(HERE, "index.html")
 ARCADE_PATH = os.path.join(HERE, "arcade.html")
+VERIFY_PATH = os.path.join(HERE, "verify.html")
 MODES = ("CLEAN", "ARMED", "IMPOSTOR")
 
 
@@ -80,8 +81,8 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         parsed = urlparse(self.path)
-        if parsed.path in ("/", "/arcade"):
-            path = ARCADE_PATH if parsed.path == "/arcade" else INDEX_PATH
+        if parsed.path in ("/", "/arcade", "/verify"):
+            path = VERIFY_PATH if parsed.path == "/verify" else (ARCADE_PATH if parsed.path == "/arcade" else INDEX_PATH)
             with open(path, "rb") as f:
                 body = f.read()
             self.send_response(200)
@@ -89,6 +90,31 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
+        elif parsed.path == "/api/verify":
+            import glob
+            import sys
+            sys.path.insert(0, os.path.join(HERE, "..", "src"))
+            from runway.receipts import ReceiptChain
+
+            results = []
+            base = os.path.join(HERE, "..", "artifacts")
+            paths = sorted(glob.glob(os.path.join(base, "**", "receipt_*.jsonl"), recursive=True))[-12:]
+            for p in paths:
+                run = os.path.basename(os.path.dirname(p))
+                fname = os.path.basename(p)
+                try:
+                    with open(p, encoding="utf-8") as f:
+                        chain = ReceiptChain.from_jsonl(f.read())
+                    ok = bool(chain.verify())
+                    chain.replay()
+                    results.append({"run": run, "file": fname, "entries": len(chain.entries),
+                                    "verify": ok, "replay": True,
+                                    "head": chain.entries[-1].hash[:12] if chain.entries else ""})
+                except Exception as e:
+                    results.append({"run": run, "file": fname, "entries": 0,
+                                    "verify": False, "replay": False, "error": str(e)[:80]})
+            self._json({"chains": results,
+                        "all_pass": bool(results) and all(r["verify"] and r["replay"] for r in results)})
         elif parsed.path == "/events":
             import sys
             sys.path.insert(0, os.path.join(HERE, "..", "src"))
