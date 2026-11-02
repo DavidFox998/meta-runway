@@ -201,6 +201,11 @@ NOTE
     "status": "not yet addressed"
    },
    {
+    "area": "EU AI Act Article 14 — live human override",
+    "status": "not yet addressed",
+    "note": "Oversight in the current build is the mandate itself — the human's own text, fixed before the agent runs and uneditable by it — plus the full receipt record for review. A live point where a human can intervene in, or stop, an act in progress has not been built."
+   },
+   {
     "area": "EU AI Act Articles 43 and 49 — conformity assessment and registration",
     "status": "not yet addressed",
     "note": "A hackathon build; no conformity proceeding has been opened."
