@@ -15,7 +15,7 @@ by name, a clean run settles — and all of it replays.**
 ## 0:00–0:20 — the suite (refusal-first)
 
 ```bash
-git clone https://github.com/DavidFox998/soph-e-runway && cd soph-e-runway
+git clone https://github.com/DavidFox998/meta-runway && cd meta-runway
 python -m pytest -q
 ```
 
