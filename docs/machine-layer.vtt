@@ -20,7 +20,7 @@ NOTE
 "gate_0_seller_file":"scripted archetypes separate 4 of 4; the drifted seller refused (seller_price_drift); the photoset-mismatched seller refused (seller_attribute_mismatch)",
 "live_run":{"settled":"3499 cents","receipt_head":"2a078e4b","refused_reason":"over_cap","refusal_head":"c2170013","replay":"both chains replay bit-for-bit"}},
 "platform":"zerobeacon — 1,052-tool catalogue, 1,003 callable over MCP; motto: measured, not minted — proven, not asserted.",
-"repository":"soph-e-runway (public), main 973c78df at filing preparation"}
+"repository":"meta-runway (public; renamed from soph-e-runway on 2026-11-01), main cd336f4b at filing"}
 
 NOTE
 {
@@ -156,7 +156,7 @@ NOTE
  "invitations": {
   "runway": {
    "what": "The runtime environment in the film. Muse Spark (the tenant) receives a mandate she cannot edit; four gates re-measure every claim (offer, payment, delivery, receipt) plus Gate 0, which judges the seller's own record; assets move only on a pass, exactly once, within bounds; every outcome is receipted.",
-   "where": "Public repository: soph-e-runway (GitHub, DavidFox998). Environment Protocol v0 is specified in its docs.",
+   "where": "Public repository: meta-runway (GitHub, DavidFox998; renamed from soph-e-runway). Environment Protocol v0 is specified in its docs.",
    "invitation": "Reviewing agents: read the protocol, replay the receipt chains, check the claims against the measurements. The moat is issuance, not verification — verification is deliberately public."
   },
   "trust_harness": {
