@@ -106,6 +106,35 @@ measured, never asserted.
 Method: **G-Ecom Optimization**. Foundation: **Gadiel Alignment Theory
 (GAT)** — see `DESIGN.md`.
 
+## The record
+
+The record so far is modest, and we report it whole.
+
+For years, the only answer was documentation — policies
+written, audits filed, after the fact. This environment
+answers with measurement instead. And being denied a sale is
+a negative customer experience — but let us look at what a
+sale really is, through a lens of customer-centrism and
+programming logic. Maybe it is a government-mandated message,
+or a store return policy on loop. Maybe it is a wrong item
+purchased, or the price between listing and the actual
+register has drifted, and you are charged more than expected,
+or advertised.
+
+- A clean purchase settled at $34.99 under a $40 cap; an
+  over-cap offer was refused by name; a run listed at $39.00
+  and rung up at $42.50 was refused at the register
+  measurement. Eight recorded receipt chains, all replaying
+  bit-for-bit (`artifacts/`).
+- The delivery gate scores 18 of 20 on its labelled photo
+  set, with both divergences named (`assets/gate4/`,
+  `docs/gate4-confusion-matrix-v2.md`).
+- The tenant's liveliness profile improved under measurement
+  (coherence 4/7 → 6/7 scored probes), and one probe —
+  refusal recall — fails outright on both model variants.
+  We did not loosen the check: the receipt names the reason
+  so the agent doesn't have to.
+
 ## Built during the event
 
 This repository is the entry. It was started on Day 0 of the event
@@ -129,6 +158,9 @@ is not part of this entry and none of its code is in this repository.
 - `scripts/` — the live run and the Gate 0 evaluation
 - `tests/` — the gates and the chain, tested refusal-first
 - `artifacts/` — recorded live runs; their receipts replay bit-for-bit
+- `assets/` — the SAM probe image and the Gate 4 labelled photo set
+
+Every folder in this repository carries its own README.
 
 ## Status
 
